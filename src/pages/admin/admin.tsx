@@ -64,7 +64,7 @@ const AdminDashbord = () => {
 
         <div className="grid grid-cols-1 gap-4">
           {user?.jobs.length > 0 ? (
-            user.jobs.map((curr) => (
+            user.jobs.map((curr:any) => (
               <div 
                 key={curr.id}
                 className="group bg-white/5 border border-white/10 p-5 md:p-6  backdrop-blur-md flex flex-col md:flex-row items-center justify-between gap-6 hover:border-[#066BDB]/50 transition-all shadow-xl"

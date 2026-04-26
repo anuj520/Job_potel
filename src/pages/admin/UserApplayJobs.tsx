@@ -43,7 +43,7 @@ const UserApplayJobs = () => {
       toast.success("Status Updated!");
       setIsModalOpen(false);
       setFormData({ status: "pending", feedback: "" });
-      queryClient.invalidateQueries(["getData"]); // Data refresh karne ke liye
+     queryClient.invalidateQueries({ queryKey: ["getData"] });
     } catch (error) {
       console.error(error);
     }

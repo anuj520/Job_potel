@@ -14,7 +14,7 @@ const AdminPost = () => {
     salary: ""
   });
 
-  const handleChange = (e) => {
+  const handleChange = (e:any) => {
     const { name, value } = e.target;
     setpost((prev) => ({
       ...prev,
@@ -22,7 +22,7 @@ const AdminPost = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e:any) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
     const headers = { Authorization: `Bearer ${token}` };
@@ -35,7 +35,7 @@ const AdminPost = () => {
         jobTitle: "", jobDesc: "", experience: "",
         jobType: "", jobRole: "", location: "", salary: ""
       });
-    } catch (error) {
+    } catch (error:any) {
       toast.error("Post Error:", error.response?.data || error.message);
       toast.error("Failed to post job.");
     }

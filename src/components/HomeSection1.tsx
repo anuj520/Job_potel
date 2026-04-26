@@ -1,5 +1,4 @@
 import "@fontsource/inter/700.css";
-import { useState } from "react";
 import { useAuth } from "../Context/contextAPI";
 
 const HomeSection1 = () => {

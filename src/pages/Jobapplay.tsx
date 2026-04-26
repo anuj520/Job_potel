@@ -23,8 +23,7 @@ queryKey:[`user`],
 queryFn:getApplayJobs  
 })
 
-console.log(apply);
-
+if(error) return <div>error</div>
 
  if (isLoading) return <div className="h-screen flex items-center justify-center bg-[#0a0a0a] text-[#D91099] font-black tracking-[10px] animate-pulse">LOADING...</div>;
 

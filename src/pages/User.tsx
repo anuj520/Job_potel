@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 
 const User = () => {
   const navigate = useNavigate();
-  const [editField, setEditField] = useState(null);
+const [editField, setEditField] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
 
   // States for Files & Previews
@@ -129,10 +129,14 @@ const fetchAllUserData = async () => {
      navigate("/login"); 
   };
   
-  
+  type InputGroupProps = {
+  label: string;
+  value: string;
+  field: string;
+};
 
 
-  const InputGroup = ({ label, value, field }) => (
+const InputGroup = ({ label, value, field }: InputGroupProps) => (
     <div className="flex flex-col gap-1 w-full">
       <label className="text-[10px] text-gray-400 uppercase font-bold tracking-[2px]">{label}</label>
       <div className={`flex items-center border-b-2 transition-all pb-1 ${editField === field ? "border-[#D91099]" : "border-white/10"}`}>
@@ -218,12 +222,12 @@ const fetchAllUserData = async () => {
                 <h4 className={`text-sm font-bold uppercase tracking-widest ${user?.resumeLink ? `text-[#ddd]` :`text-red-500`}`}>
                   {user?.resumeLink ? "Resume uploaded" : "Please upload your resume"}  
                 </h4>
-             <a href={user?.resumeLink} target="_blank"> <p className="text-xs text-[#D91099]">{resumeFile ? resumeFile.name : (user?.resumeLink ? "view resume" : "No file found")}</p></a>
+             <a href={user?.resumeLink} target="_blank"> <p className="text-xs text-[#D91099]">{resumeFile ? resumeFile : (user?.resumeLink ? "view resume" : "No file found")}</p></a>
               </div>
             </div>
             <label className="bg-[#ddd] text-black cursor-pointer  text-xs font-black px-4 py-2 rounded-tl-xl rounded-br-xl cursor-pointer hover:bg-[#D91099]  hover:text-white transition-all">
              {user?.resumeLink?"New":"UPLOAD"} 
-              <input type="file" required hidden onChange={(e) => setResumeFile(e.target.files[0])} accept=".pdf" />
+              <input type="file" required hidden onChange={(e:any) => setResumeFile(e.target.files[0])} accept=".pdf" />
             </label>
           </div>
 

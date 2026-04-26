@@ -5,7 +5,6 @@ import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 import { ScrollTrigger } from "gsap/all"
 import { useQuery } from "@tanstack/react-query"
-import AxiosURL from "../axios/axios"
 
 
 const HomeSection2 = () => {
