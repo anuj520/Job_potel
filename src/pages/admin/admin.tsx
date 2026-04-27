@@ -13,7 +13,7 @@ const AdminDashbord = () => {
 const getCompanyProfile = async() =>{
  const token = localStorage.getItem("token");
 const headers = { Authorization: `Bearer ${token}` };
-const response = await AxiosURL.get("/api/v1/recruiter/org",{headers})
+const response = await AxiosURL.get(import.meta.env.VITE_Recruiter_Profile_URL ,{headers})
 return response.data.data.company
 }
 
