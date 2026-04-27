@@ -83,12 +83,12 @@ return (
         ><p>p</p><p>r</p><p>o</p><p>f</p><p>i</p><p>l</p><p>e</p>
         </motion.li> </NavLink>
 
-      <NavLink to={"/admin/about"}>  <motion.li
+      <NavLink to={"/admin/dashbord"}>  <motion.li
         className="flex"
          id="search" 
          onHoverStart={()=>hoverEffect("#search")}
         onHoverEnd={()=>hoverEnd("#search")}
-        ><p>a</p><p>b</p><p>o</p><p>u</p><p>t</p>
+        ><p>d</p><p>a</p><p>s</p><p>h</p><p>b</p><p>o</p><p>r</p><p>d</p>
         </motion.li></NavLink>
 
       </ul>
