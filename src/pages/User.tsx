@@ -135,6 +135,7 @@ const fetchAllUserData = async () => {
   field: string;
 };
 
+const resume = localStorage.getItem("resumeLink")
 
 const InputGroup = ({ label, value, field }: InputGroupProps) => (
     <div className="flex flex-col gap-1 w-full">
@@ -147,9 +148,12 @@ const InputGroup = ({ label, value, field }: InputGroupProps) => (
           onChange={(e) => setFormData({ ...formData, [field]: e.target.value })}
           className="bg-transparent w-full outline-none text-sm md:text-base text-white disabled:text-gray-400"
         />
+        {
+         resume !== null &&
         <button onClick={() => setEditField(editField === field ? null : field)} className="ml-2">
           {editField === field ? <MdCheck className="text-green-500" size={20}/> : <MdEdit className="text-[#D91099] hover:text-white" size={18}/>}
         </button>
+}
       </div>
     </div>
   );
