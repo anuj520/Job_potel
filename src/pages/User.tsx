@@ -114,7 +114,7 @@ const fetchAllUserData = async () => {
       postGradClg: user.postGradClg || "",
       postGradPerc: user.postGradPerc || ""
     });
-
+    
     if (user.profilePhoto) {
       setProfileImgPreview(user.profilePhoto);
       localStorage.setItem("profilePhoto",user.profilePhoto)
@@ -130,6 +130,7 @@ const fetchAllUserData = async () => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("role")
     localStorage.removeItem("profilePhoto")
     localStorage.removeItem("resumeLink")
     localStorage.removeItem("isLoggedIn")

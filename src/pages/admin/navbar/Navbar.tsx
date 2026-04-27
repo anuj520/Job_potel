@@ -3,11 +3,9 @@ import {motion} from "framer-motion"
 import "@fontsource/inter/700.css";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { useAuth } from "../../../Context/contextAPI";
 import { useEffect } from "react";
 
 const AdminNavbar = () => {
-const auth = useAuth()
 const{pathname} = useLocation()
 const navigate = useNavigate()
 const {contextSafe} = useGSAP();
@@ -35,11 +33,15 @@ useEffect(()=>{
 window.scrollTo(0,0)
 },[pathname])
 
+const role = localStorage.getItem("role")
+
 useEffect(() => {
-  if (!auth?.adminAuthoriza) {
-    navigate(-1)
+  if (role === "user") {
+    navigate("/home")
+  } else if (role === "admin") {
+    navigate("/admin")
   }
-}, [auth])
+}, [role])
 
 
 return (

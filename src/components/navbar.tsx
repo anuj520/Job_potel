@@ -4,16 +4,27 @@ import "@fontsource/inter/700.css";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useEffect, useState } from "react";
-import { useAuth } from "../Context/contextAPI";
 
 const Navbar = () => {
-  const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
-const [resumeLink, setResumeLink] = useState<string | null>(null);
-const [login, setLogin] = useState<string | null>(null);
+type AuthState = {
+  role: string | null
+  token: string | null
+  profilePhoto: string | null
+  resumeLink: string | null
+  login: string | null
+}
+
+const [auth, setAuth] = useState<AuthState>({
+  role: null,
+  token: null,
+  profilePhoto: null,
+  resumeLink: null,
+  login: null
+})
+
 const navigate = useNavigate()
 const {contextSafe} = useGSAP();
 const{pathname} = useLocation()
-const{Authoriza} =  useAuth()
 
 const hoverEffect = contextSafe((id:string)=>{
  gsap.to(`${id} p` ,{
@@ -34,46 +45,35 @@ const hoverEnd = contextSafe((id:string)=>{
     ease:"back.out"
  }) 
 })
-const role = localStorage.getItem("role");
-const token = localStorage.getItem("token")
 
 useEffect(() => {
-  setProfilePhoto(localStorage.getItem("profilePhoto"));
-  setResumeLink(localStorage.getItem("resumeLink"));
-  setLogin(localStorage.getItem("isLoggedIn"));
-}, []);
-
+  setAuth({
+    role: localStorage.getItem("role"),
+    token: localStorage.getItem("token"),
+    profilePhoto: localStorage.getItem("profilePhoto"),
+    resumeLink: localStorage.getItem("resumeLink"),
+    login: localStorage.getItem("isLoggedIn"),
+  })
+}, [])
 
 useEffect(() => {
-  if (role === null || token === null) {
+  const { role, token, profilePhoto, resumeLink, login } = auth
+
+  if (!token || !role) {
     navigate("/login")
-  }else if (role === "admin") {
+    return
+  }
+
+  if (role === "admin") {
     navigate("/admin")
+    return
   }
-}, [role]);
-
-useEffect(() => {
-if(role === "admin") return;
-  else if (
-    profilePhoto === null &&
-    resumeLink === null &&
-    login === null
-  ) {
-    console.log("ss");
-    
-    navigate("/home/user");
+  if (!profilePhoto && !resumeLink && !login) {
+    navigate("/home/user")
   } else {
-    navigate("/home");
+    navigate("/home")
   }
-}, [profilePhoto, resumeLink, login,role]);
-
-useEffect(()=>{
-if (!Authoriza) {
-console.log("hello");
-  
-navigate(-1)
-}
-},[Authoriza])
+}, [auth])
 
 useEffect(()=>{
 window.scrollTo(0,0)

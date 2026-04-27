@@ -40,6 +40,7 @@ return response.data.data.company
   const handleLogout = () =>{
     localStorage.removeItem("token")
     localStorage.removeItem("role")
+     localStorage.removeItem("isLoggedIn")
     navigate("/login")
   }
 

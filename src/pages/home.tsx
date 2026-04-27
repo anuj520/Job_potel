@@ -2,9 +2,8 @@ import { Canvas } from "@react-three/fiber"
 import Scene from "../components/scene";
 import HomeSection1 from "../components/HomeSection1";
 import HomeSection2 from "../components/HomeSection2";
-import { Suspense, useEffect} from "react";
+import {useEffect} from "react";
 import { useAuth } from "../Context/contextAPI";
-import Loading3d from "../components/Loading3d";
 import { useNavigate } from "react-router-dom";
 const Home = () => {
 const navigate = useNavigate();
@@ -28,9 +27,7 @@ backgroundImage:`url(${rfa?.roleAU ? "/bg2.png": "/bg.png"})`,
 backgroundSize:"cover",
 backgroundPosition:"center"
 }} dpr={[1,2]}>
-<Suspense fallback={<Loading3d/>}>
-<Scene/>
-</Suspense>  
+<Scene/> 
 
 {/* //Lights */}
 <ambientLight color={`${rfa?.colorFont.color}`} intensity={5}/>

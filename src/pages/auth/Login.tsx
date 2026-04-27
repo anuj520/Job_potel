@@ -45,7 +45,7 @@ e.preventDefault();
         else if (status === 409) {
           toast.error("User already exists:", data.message);
         }
-        else if(status === 400) {
+        else if(error.response.status === 400) {
           toast.error( "Invalid credentials");
         }
       } else {
