@@ -3,10 +3,13 @@ import {motion} from "framer-motion"
 import "@fontsource/inter/700.css";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../Context/contextAPI";
 
 const Navbar = () => {
+  const [profilePhoto, setProfilePhoto] = useState<string | null>(null);
+const [resumeLink, setResumeLink] = useState<string | null>(null);
+const [login, setLogin] = useState<string | null>(null);
 const navigate = useNavigate()
 const {contextSafe} = useGSAP();
 const{pathname} = useLocation()
@@ -31,23 +34,38 @@ const hoverEnd = contextSafe((id:string)=>{
     ease:"back.out"
  }) 
 })
-const profilePhoto = localStorage.getItem("profilePhoto") 
-const resumeLink = localStorage.getItem("resumeLink")
 const role = localStorage.getItem("role");
 const token = localStorage.getItem("token")
-const login = localStorage.getItem("isLoggedIn")
+
 useEffect(() => {
-  if (profilePhoto === null && resumeLink === null && login === null) {
-    navigate("/home/user");
-  }else{
-  navigate("/home");
-  }
+  setProfilePhoto(localStorage.getItem("profilePhoto"));
+  setResumeLink(localStorage.getItem("resumeLink"));
+  setLogin(localStorage.getItem("isLoggedIn"));
+}, []);
+
+
+useEffect(() => {
   if (role === null || token === null) {
     navigate("/login")
   }else if (role === "admin") {
     navigate("/admin")
   }
-}, [profilePhoto, resumeLink,role]);
+}, [role]);
+
+useEffect(() => {
+if(role === "admin") return;
+  else if (
+    profilePhoto === null &&
+    resumeLink === null &&
+    login === null
+  ) {
+    console.log("ss");
+    
+    navigate("/home/user");
+  } else {
+    navigate("/home");
+  }
+}, [profilePhoto, resumeLink, login,role]);
 
 useEffect(()=>{
 if (!Authoriza) {

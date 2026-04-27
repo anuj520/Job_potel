@@ -77,6 +77,9 @@ if(error) return <div>error</div>
                   <p className="text-sm text-gray-400">
                     {job.salary}
                   </p>
+                    <p className="text-[#D91099]">
+                    {job.feedback}
+                  </p>
                 </div>
 
               </div>

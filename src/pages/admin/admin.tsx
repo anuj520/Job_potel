@@ -4,14 +4,27 @@ import { useAuth } from "../../Context/contextAPI";
 import { FiMapPin, FiBriefcase, FiUsers, FiCalendar } from "react-icons/fi";
 import {motion} from "framer-motion"
 import Adminloading from "./loading/admin loading";
+import AxiosURL from "../../axios/axios";
 
 const AdminDashbord = () => {
   const navigate = useNavigate();
   const { getAllJobsPosted } = useAuth();
 
+const getCompanyProfile = async() =>{
+ const token = localStorage.getItem("token");
+const headers = { Authorization: `Bearer ${token}` };
+const response = await AxiosURL.get("/api/v1/recruiter/org",{headers})
+return response.data.data.company
+}
+
+
   const { data: user, isLoading } = useQuery({
     queryKey: ['posted'],
     queryFn: getAllJobsPosted
+  });
+    const {data: profile} = useQuery({
+    queryKey: ['profileget'],
+    queryFn: getCompanyProfile
   });
 
 
@@ -30,12 +43,40 @@ const AdminDashbord = () => {
     navigate("/login")
   }
 
-  if (isLoading) return (
+  if (isLoading || profile === undefined) return (
     <Adminloading/>
   );
 
   return (
     <main className="min-h-screen  bg-[url('/bg.png')] bg-cover bg-center p-4 md:p-10">
+    <main className="p-4 md:p-1 font-sans">
+      
+      <section className="max-w-6xl mx-auto mb-10">
+        <div className="p-6 rounded-[2.5rem] flex flex-col md:flex-row items-center gap-6 shadow-2xl ">
+          
+          <div className="w-24 h-24 rounded-3xl overflow-hidden border-2 border-blue-500/50 p-1 bg-white/5 shrink-0">
+            <img 
+              src={profile.company_img} 
+              alt={`${profile.companyName} Logo`} 
+              className="w-full h-full object-cover rounded-2xl"
+            />
+          </div>
+
+          <div className="text-center md:text-left">
+            <h1 className="text-4xl font-black text-white tracking-tight uppercase">
+              {profile.companyName} <span className="text-blue-500">Recruiter Panel</span>
+            </h1>
+            <p className="text-gray-400 text-sm mt-1 tracking-wide">
+              Official dashboard for {profile.companyName} talent acquisition
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+    </main>
+  );
+      
       <div className="max-w-6xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
           <h1 className="text-3xl font-extrabold text-white tracking-tight">

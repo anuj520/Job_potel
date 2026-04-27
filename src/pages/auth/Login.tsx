@@ -40,7 +40,6 @@ e.preventDefault();
         const { status, data } = error.response;
   
         if (status === 401) {
-          toast.error("Validation Errors:", data.errors);
           toast.error("password not match")
         }
         else if (status === 409) {

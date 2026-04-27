@@ -10,6 +10,7 @@ const User = () => {
   const queryClient = useQueryClient();
 const [editField, setEditField] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const[check,setcheck] = useState(false)
 
   // States for Files & Previews
   const [profileImgPreview, setProfileImgPreview] = useState("https://www.pngall.com/wp-content/uploads/15/User-PNG-HD-Image.png");
@@ -104,6 +105,7 @@ const fetchAllUserData = async () => {
 
   useEffect(() => {
   if (user) {
+    setcheck(true)
     setFormData({
       graduationClg: user.graduationClg || "",
       graduationPerc: user.graduationPerc || "",
@@ -119,6 +121,9 @@ const fetchAllUserData = async () => {
     } 
     if (user.resumeLink) {
       localStorage.setItem("resumeLink",user.resumeLink)
+      localStorage.setItem("isLoggedIn","true")
+    }else if(check){
+     toast.warn("resume is required")
     }
   }
 }, [user]);
