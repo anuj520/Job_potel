@@ -2,12 +2,22 @@ import { Canvas } from "@react-three/fiber"
 import Scene from "../components/scene";
 import HomeSection1 from "../components/HomeSection1";
 import HomeSection2 from "../components/HomeSection2";
-import { Suspense} from "react";
+import { Suspense, useEffect} from "react";
 import { useAuth } from "../Context/contextAPI";
 import Loading3d from "../components/Loading3d";
+import { useNavigate } from "react-router-dom";
 const Home = () => {
-
+const navigate = useNavigate();
 const rfa = useAuth()
+
+const login = localStorage.getItem("isLoggedIn")
+useEffect(()=>{
+if (login === null) {
+     navigate("/home/user")
+}
+},[login])
+
+
 
   return (
     <main className="relative">

@@ -35,10 +35,12 @@ const profilePhoto = localStorage.getItem("profilePhoto")
 const resumeLink = localStorage.getItem("resumeLink")
 const role = localStorage.getItem("role");
 const token = localStorage.getItem("token")
-
+const login = localStorage.getItem("isLoggedIn")
 useEffect(() => {
-  if (profilePhoto === null && resumeLink === null) {
+  if (profilePhoto === null && resumeLink === null && login === null) {
     navigate("/home/user");
+  }else{
+  navigate("/home");
   }
   if (role === null || token === null) {
     navigate("/login")

@@ -28,8 +28,9 @@ e.preventDefault();
       if (userData) {
         localStorage.setItem("token", userData);
         localStorage.setItem("role", role);
+        localStorage.setItem("isLoggedIn", "true");
       }
-    navigate("/home/user")
+    navigate("/home")
     window.location.reload()
     }
 
@@ -45,8 +46,8 @@ e.preventDefault();
         else if (status === 409) {
           toast.error("User already exists:", data.message);
         }
-        else {
-          toast.error( data.errors);
+        else if(status === 400) {
+          toast.error( "Invalid credentials");
         }
       } else {
         toast.error("Network Error:", error.message);

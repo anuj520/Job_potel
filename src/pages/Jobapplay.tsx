@@ -1,7 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import AxiosURL from "../axios/axios";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Jobapplay = () => {
+const navigate = useNavigate()  
+
 const getApplayJobs = async() =>{
 try{
 const headers = {
@@ -22,6 +26,13 @@ const{data:apply,isLoading,error} = useQuery({
 queryKey:[`user`],
 queryFn:getApplayJobs  
 })
+
+const login = localStorage.getItem("isLoggedIn")
+useEffect(()=>{
+if (login === null) {
+    navigate("/home/user")
+}
+},[login])
 
 if(error) return <div>error</div>
 

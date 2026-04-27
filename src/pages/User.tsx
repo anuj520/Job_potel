@@ -1,19 +1,20 @@
 import { useState, useEffect } from "react";
 import { MdEdit, MdCheck, MdCameraAlt, MdCloudUpload, MdLogout } from "react-icons/md";
-import { useQuery,} from "@tanstack/react-query";
+import { useQuery, useQueryClient,} from "@tanstack/react-query";
 import AxiosURL from "../axios/axios";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const User = () => {
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 const [editField, setEditField] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
 
   // States for Files & Previews
   const [profileImgPreview, setProfileImgPreview] = useState("https://www.pngall.com/wp-content/uploads/15/User-PNG-HD-Image.png");
   const [profileFile, setProfileFile] = useState(null);
-  const [resumeFile, setResumeFile] = useState(null);
+const [resumeFile, setResumeFile] = useState<File | null>(null);
 
   // Form Data State
   const [formData, setFormData] = useState({
@@ -92,7 +93,7 @@ const fetchAllUserData = async () => {
 
       await Promise.all(requests);
       toast.success("Profile & Education synced successfully!");
-       fetchAllUserData();
+      queryClient.invalidateQueries({ queryKey: ["user"] })
     } catch (err:any) {
       toast.error(err.response?.data?.message || "Update failed");
     } finally {
@@ -126,6 +127,7 @@ const fetchAllUserData = async () => {
     localStorage.removeItem("token");
     localStorage.removeItem("profilePhoto")
     localStorage.removeItem("resumeLink")
+    localStorage.removeItem("isLoggedIn")
      navigate("/login"); 
   };
   
@@ -226,7 +228,7 @@ const InputGroup = ({ label, value, field }: InputGroupProps) => (
                 <h4 className={`text-sm font-bold uppercase tracking-widest ${user?.resumeLink ? `text-[#ddd]` :`text-red-500`}`}>
                   {user?.resumeLink ? "Resume uploaded" : "Please upload your resume"}  
                 </h4>
-             <a href={user?.resumeLink} target="_blank"> <p className="text-xs text-[#D91099]">{resumeFile ? resumeFile : (user?.resumeLink ? "view resume" : "No file found")}</p></a>
+             <a href={user?.resumeLink} target="_blank"> <p className="text-xs text-[#D91099]">{resumeFile ? resumeFile?.name : (user?.resumeLink ? "view resume" : "No file found")}</p></a>
               </div>
             </div>
             <label className="bg-[#ddd] text-black cursor-pointer  text-xs font-black px-4 py-2 rounded-tl-xl rounded-br-xl cursor-pointer hover:bg-[#D91099]  hover:text-white transition-all">

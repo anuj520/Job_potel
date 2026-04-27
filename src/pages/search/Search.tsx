@@ -1,11 +1,13 @@
 import { FiDollarSign, FiMapPin, FiSearch } from "react-icons/fi";
 import AxiosURL from "../../axios/axios";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "../../Context/contextAPI";
+import { useNavigate } from "react-router-dom";
 
 const Search = () => {
  const[search,setSearch] = useState("") 
+ const navigate = useNavigate()
  const handle = useAuth()
   const getAllJobs = async () => {
     const token = localStorage.getItem("token");
@@ -18,6 +20,13 @@ const Search = () => {
     queryKey: ["users"],
     queryFn: getAllJobs,
   });
+
+  const login = localStorage.getItem("isLoggedIn")
+  useEffect(()=>{
+  if (login === null) {
+       navigate("/home/user")
+  }
+  },[login])
 
 const filteredJobs = user?.filter((curr:any)=>{
 return(
